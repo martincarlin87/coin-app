@@ -16,7 +16,7 @@ Built with Laravel 12, Vue 3, Inertia.js, Redis, and Tailwind CSS.
 - **Auto-Refresh**: Data automatically updates every 5 minutes
 - **Performance Optimized**: 5-minute caching to reduce database load
 - **Secure API**: CORS protection and rate limiting (60 req/min)
-- **Comprehensive Testing**: 54 tests covering all critical functionality
+- **Comprehensive Testing**: 59 tests covering all critical functionality
 
 ## Quick Start
 
@@ -177,8 +177,8 @@ Comprehensive test coverage across multiple layers:
 - **Security Tests**: Rate limiting and API protection
 
 **Test Statistics:**
-- 54 tests
-- 310 assertions
+- 59 tests
+- 332 assertions
 - 100% critical path coverage
 
 ## Development
@@ -283,7 +283,7 @@ Parameters:
 
 **Show Coin:**
 ```
-GET /api/coins/{id}
+GET /api/coins/{slug}
 Parameters:
   - search: string (for navigation context)
   - length: integer (for navigation context)
