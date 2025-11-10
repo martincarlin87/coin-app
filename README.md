@@ -15,7 +15,8 @@ Built with Laravel 12, Vue 3, Inertia.js, Redis, and Tailwind CSS.
 - **Responsive Design**: Optimized for desktop and mobile devices
 - **Auto-Refresh**: Data automatically updates every 5 minutes
 - **Performance Optimized**: 5-minute caching to reduce database load
-- **Comprehensive Testing**: 51 tests covering all critical functionality
+- **Secure API**: CORS protection and rate limiting (60 req/min)
+- **Comprehensive Testing**: 54 tests covering all critical functionality
 
 ## Quick Start
 
@@ -152,11 +153,18 @@ This architecture allows the same backend logic to serve both web browsers and A
 
 ### Security
 
+**API Protection:**
+- **Rate Limiting**: API endpoints limited to 60 requests per minute per IP
+- **CORS Configuration**: Restricts API access to whitelisted domains (configured in `APP_URL`)
+- **Method Restrictions**: API only accepts GET and HEAD requests
+- **Request Validation**: All endpoints validate input parameters
+
+**Best Practices:**
 - API keys stored in environment variables (never in code)
-- Header-based authentication (more secure than query parameters)
+- Header-based authentication for CoinGecko API (more secure than query parameters)
 - Dynamic header key based on environment (demo vs pro)
-- Request validation on all endpoints
 - No direct `env()` calls outside configuration files
+- Rate limit headers included in responses for transparency
 
 ### Testing Strategy
 
@@ -166,10 +174,11 @@ Comprehensive test coverage across multiple layers:
 - **Feature Tests**: Integration testing (API, Controllers, Services)
 - **Browser Tests**: End-to-end UI testing with Pest v4
 - **Caching Tests**: Verify cache behavior and invalidation
+- **Security Tests**: Rate limiting and API protection
 
 **Test Statistics:**
-- 51 tests
-- 245 assertions
+- 54 tests
+- 310 assertions
 - 100% critical path coverage
 
 ## Development
@@ -279,6 +288,17 @@ Parameters:
   - search: string (for navigation context)
   - length: integer (for navigation context)
 ```
+
+**API Security:**
+- **Public API**: No authentication required - accessible to all
+- **CORS Protection**: Only accepts requests from whitelisted domains (configured via `APP_URL`)
+- **CSRF Protection**: Laravel Sanctum SPA authentication protects same-domain requests
+- **Rate Limiting**: 60 requests per minute per IP address
+- Returns `429 Too Many Requests` when limit exceeded
+- Response headers include `X-RateLimit-Limit` and `X-RateLimit-Remaining`
+
+**How It Works:**
+The API uses Laravel Sanctum's SPA authentication, which provides CSRF protection for requests from your frontend (Inertia.js) without requiring user authentication. External domains are blocked by CORS.
 
 ### CoinGecko API Configuration
 

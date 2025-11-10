@@ -19,6 +19,9 @@ return Application::configure(basePath: dirname(__DIR__))
             AddLinkHeadersForPreloadedAssets::class,
         ]);
     })
+    ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->statefulApi();
+    })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
     })->create();

@@ -1,12 +1,11 @@
 <?php
 
 use App\Http\Controllers\Api\CoinApiController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
-
-Route::get('/coins', [CoinApiController::class, 'index']);
-Route::get('/coins/{coin}', [CoinApiController::class, 'show']);
+// CORS protection: Only APP_URL domain can access (config/cors.php)
+// CSRF protection: Handled by statefulApi middleware (bootstrap/app.php)
+Route::middleware('throttle:60,1')->group(function () {
+    Route::get('/coins', [CoinApiController::class, 'index']);
+    Route::get('/coins/{coin}', [CoinApiController::class, 'show']);
+});
