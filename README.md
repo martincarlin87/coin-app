@@ -28,7 +28,7 @@ Built with Laravel 12, Vue 3, Inertia.js, Redis, and Tailwind CSS.
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone git@github.com:martincarlin87/coin-app.git
 cd coin-app
 ```
 
