@@ -123,7 +123,7 @@ describe('Coin API Show', function () {
     it('returns a single coin', function () {
         $coin = Coin::factory()->create();
 
-        $response = getJson("/api/coins/{$coin->id}");
+        $response = getJson("/api/coins/{$coin->slug}");
 
         $response->assertSuccessful()
             ->assertJsonStructure([
@@ -147,11 +147,11 @@ describe('Coin API Show', function () {
                     'last_updated',
                 ],
             ])
-            ->assertJsonFragment(['id' => $coin->id]);
+            ->assertJsonFragment(['slug' => $coin->slug]);
     });
 
     it('returns 404 for non-existent coin', function () {
-        $response = getJson('/api/coins/99999');
+        $response = getJson('/api/coins/non-existent-coin');
 
         $response->assertNotFound();
     });
@@ -164,7 +164,7 @@ describe('Coin API Show', function () {
             'genesis_date' => '2009-01-03',
         ]);
 
-        $response = getJson("/api/coins/{$coin->id}");
+        $response = getJson("/api/coins/{$coin->slug}");
 
         $response->assertSuccessful()
             ->assertJsonPath('data.metadata.hashing_algorithm', 'SHA-256');
@@ -172,34 +172,34 @@ describe('Coin API Show', function () {
         expect($response->json('data.metadata.genesis_date'))->toStartWith('2009-01-03');
     });
 
-    it('includes next coin id when there is a higher ranked coin', function () {
+    it('includes next coin slug when there is a higher ranked coin', function () {
         $coin1 = Coin::factory()->create(['market_cap_rank' => 1]);
         $coin2 = Coin::factory()->create(['market_cap_rank' => 2]);
 
-        $response = getJson("/api/coins/{$coin1->id}?length=10");
+        $response = getJson("/api/coins/{$coin1->slug}?length=10");
 
         $response->assertSuccessful()
-            ->assertJsonPath('data.next_coin_id', $coin2->id);
+            ->assertJsonPath('data.next_coin_slug', $coin2->slug);
     });
 
-    it('includes previous coin id when there is a lower ranked coin', function () {
+    it('includes previous coin slug when there is a lower ranked coin', function () {
         $coin1 = Coin::factory()->create(['market_cap_rank' => 1]);
         $coin2 = Coin::factory()->create(['market_cap_rank' => 2]);
 
-        $response = getJson("/api/coins/{$coin2->id}?length=10");
+        $response = getJson("/api/coins/{$coin2->slug}?length=10");
 
         $response->assertSuccessful()
-            ->assertJsonPath('data.previous_coin_id', $coin1->id);
+            ->assertJsonPath('data.previous_coin_slug', $coin1->slug);
     });
 
-    it('does not include next coin id when at the end of filtered results', function () {
+    it('does not include next coin slug when at the end of filtered results', function () {
         Coin::factory()->create(['market_cap_rank' => 1]);
         $lastCoin = Coin::factory()->create(['market_cap_rank' => 10]);
 
-        $response = getJson("/api/coins/{$lastCoin->id}?length=10");
+        $response = getJson("/api/coins/{$lastCoin->slug}?length=10");
 
         $response->assertSuccessful();
-        expect($response->json('data.next_coin_id'))->toBeNull();
+        expect($response->json('data.next_coin_slug'))->toBeNull();
     });
 
     it('respects search filter for next/previous navigation', function () {
@@ -207,9 +207,9 @@ describe('Coin API Show', function () {
         $bitcoinCash = Coin::factory()->create(['name' => 'Bitcoin Cash', 'market_cap_rank' => 2]);
         Coin::factory()->create(['name' => 'Ethereum', 'market_cap_rank' => 3]);
 
-        $response = getJson("/api/coins/{$bitcoin->id}?search=Bitcoin&length=10");
+        $response = getJson("/api/coins/{$bitcoin->slug}?search=Bitcoin&length=10");
 
         $response->assertSuccessful()
-            ->assertJsonPath('data.next_coin_id', $bitcoinCash->id);
+            ->assertJsonPath('data.next_coin_slug', $bitcoinCash->slug);
     });
 });

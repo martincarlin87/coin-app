@@ -61,14 +61,13 @@ const formatMarketCap = (marketCap: number) => {
     }).format(marketCap);
 };
 
-const viewCoin = (coinId: number) => {
+const viewCoin = (coinSlug: string) => {
     const params = new URLSearchParams();
     if (searchQuery.value) {
         params.set('search', searchQuery.value);
     }
 
-    const queryString = params.toString();
-    router.visit(`/coins/${coinId}${queryString ? '?' + queryString : ''}`);
+    router.visit(`/coins/${coinSlug}`);
 };
 
 let searchTimeout: ReturnType<typeof setTimeout> | null = null;
@@ -198,7 +197,7 @@ const clearSearch = () => {
                             v-for="coin in coins"
                             :key="coin.id"
                             class="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700"
-                            @click="viewCoin(coin.id)"
+                            @click="viewCoin(coin.slug)"
                         >
                             <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-900 dark:text-gray-100">
                                 {{ coin.market_cap_rank }}

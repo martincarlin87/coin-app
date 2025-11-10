@@ -17,21 +17,21 @@ describe('Coin Web Controller', function () {
             );
     });
 
-    it('renders the coin show page with coin id', function () {
+    it('renders the coin show page with coin slug', function () {
         $coin = Coin::factory()->create();
 
-        $response = get("/coins/{$coin->id}");
+        $response = get("/coins/{$coin->slug}");
 
         $response->assertSuccessful()
             ->assertInertia(fn (Assert $page) => $page
                 ->component('Coins/Show')
-                ->has('coinId')
-                ->where('coinId', $coin->id)
+                ->has('coinSlug')
+                ->where('coinSlug', $coin->slug)
             );
     });
 
     it('returns 404 for non-existent coin', function () {
-        $response = get('/coins/99999');
+        $response = get('/coins/non-existent-coin');
 
         $response->assertNotFound();
     });

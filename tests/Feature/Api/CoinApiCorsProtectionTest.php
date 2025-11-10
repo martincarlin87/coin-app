@@ -38,7 +38,7 @@ describe('Coin API CORS Protection', function () {
     it('allows individual coin access without authentication', function () {
         $coin = Coin::factory()->create(['market_cap_rank' => 1]);
 
-        $response = getJson("/api/coins/{$coin->id}");
+        $response = getJson("/api/coins/{$coin->slug}");
 
         $response->assertSuccessful()
             ->assertJsonStructure([

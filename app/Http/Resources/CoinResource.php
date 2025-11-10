@@ -39,8 +39,8 @@ final class CoinResource extends JsonResource
             'atl_date' => $this->atl_date,
             'roi' => $this->roi,
             'last_updated' => $this->last_updated,
-            'next_coin_id' => $this->when(isset($this->next_coin_id), $this->next_coin_id),
-            'previous_coin_id' => $this->when(isset($this->previous_coin_id), $this->previous_coin_id),
+            'next_coin_slug' => $this->when(isset($this->next_coin_slug), $this->next_coin_slug),
+            'previous_coin_slug' => $this->when(isset($this->previous_coin_slug), $this->previous_coin_slug),
             'metadata' => new CoinMetadataResource($this->whenLoaded('metadata')),
         ];
     }

@@ -82,4 +82,12 @@ class Coin extends Model
     {
         return $this->hasOne(CoinMetadata::class);
     }
+
+    /**
+     * Use the slug attribute for route model binding
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
 }

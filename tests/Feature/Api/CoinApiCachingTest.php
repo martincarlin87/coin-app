@@ -116,7 +116,7 @@ describe('Coin API Caching', function () {
         it('caches results on first request', function () {
             $coin = Coin::factory()->create();
 
-            getJson("/api/coins/{$coin->id}")->assertSuccessful();
+            getJson("/api/coins/{$coin->slug}")->assertSuccessful();
 
             $cacheKey = 'coins:show:'.$coin->id.':'.md5(json_encode([
                 'search' => '',
@@ -130,11 +130,11 @@ describe('Coin API Caching', function () {
             $coin = Coin::factory()->create();
 
             // First request
-            getJson("/api/coins/{$coin->id}")->assertSuccessful();
+            getJson("/api/coins/{$coin->slug}")->assertSuccessful();
 
             // Count queries on second request
             DB::enableQueryLog();
-            $response = getJson("/api/coins/{$coin->id}");
+            $response = getJson("/api/coins/{$coin->slug}");
             $queryCount = count(DB::getQueryLog());
             DB::disableQueryLog();
 
@@ -148,8 +148,8 @@ describe('Coin API Caching', function () {
             $coin1 = Coin::factory()->create();
             $coin2 = Coin::factory()->create();
 
-            getJson("/api/coins/{$coin1->id}")->assertSuccessful();
-            getJson("/api/coins/{$coin2->id}")->assertSuccessful();
+            getJson("/api/coins/{$coin1->slug}")->assertSuccessful();
+            getJson("/api/coins/{$coin2->slug}")->assertSuccessful();
 
             $key1 = 'coins:show:'.$coin1->id.':'.md5(json_encode([
                 'search' => '',
@@ -168,8 +168,8 @@ describe('Coin API Caching', function () {
         it('creates different cache keys for different query parameters', function () {
             $coin = Coin::factory()->create();
 
-            getJson("/api/coins/{$coin->id}")->assertSuccessful();
-            getJson("/api/coins/{$coin->id}?search=Bitcoin")->assertSuccessful();
+            getJson("/api/coins/{$coin->slug}")->assertSuccessful();
+            getJson("/api/coins/{$coin->slug}?search=Bitcoin")->assertSuccessful();
 
             $defaultKey = 'coins:show:'.$coin->id.':'.md5(json_encode([
                 'search' => '',
@@ -192,11 +192,11 @@ describe('Coin API Caching', function () {
                 'hashing_algorithm' => 'SHA-256',
             ]);
 
-            getJson("/api/coins/{$coin->id}")->assertSuccessful();
+            getJson("/api/coins/{$coin->slug}")->assertSuccessful();
 
             // Second request should still return metadata from cache
             DB::enableQueryLog();
-            $response = getJson("/api/coins/{$coin->id}");
+            $response = getJson("/api/coins/{$coin->slug}");
             DB::disableQueryLog();
 
             $response->assertSuccessful()

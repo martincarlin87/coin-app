@@ -27,7 +27,7 @@ final class CoinController extends Controller
     public function show(Coin $coin): Response
     {
         return Inertia::render('Coins/Show', [
-            'coinId' => $coin->id,
+            'coinSlug' => $coin->slug,
         ]);
     }
 }

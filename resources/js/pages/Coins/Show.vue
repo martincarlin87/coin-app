@@ -4,7 +4,7 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
 interface Props {
-    coinId: number;
+    coinSlug: string;
 }
 
 interface CoinMetadata {
@@ -59,8 +59,8 @@ interface Coin {
     atl_change_percentage: string;
     atl_date: string;
     last_updated: string;
-    next_coin_id?: number;
-    previous_coin_id?: number;
+    next_coin_slug?: string;
+    previous_coin_slug?: string;
     metadata?: CoinMetadata;
 }
 
@@ -85,7 +85,7 @@ const fetchCoin = async () => {
         if (searchQuery) {
             params.search = searchQuery;
         }
-        const response = await axios.get(`/api/coins/${props.coinId}`, { params });
+        const response = await axios.get(`/api/coins/${props.coinSlug}`, { params });
         coin.value = response.data.data;
     } catch (err) {
         error.value = 'Failed to load coin details';
@@ -120,14 +120,14 @@ const formatDate = (dateString: string) => {
     });
 };
 
-const navigateToCoin = (coinId: number) => {
+const navigateToCoin = (coinSlug: string) => {
     const params = new URLSearchParams();
     if (searchQuery) {
         params.set('search', searchQuery);
     }
 
     const queryString = params.toString();
-    router.visit(`/coins/${coinId}${queryString ? '?' + queryString : ''}`);
+    router.visit(`/coins/${coinSlug}${queryString ? '?' + queryString : ''}`);
 };
 </script>
 
@@ -148,10 +148,10 @@ const navigateToCoin = (coinId: number) => {
             </Link>
 
             <!-- Navigation Buttons -->
-            <div v-if="coin && (coin.previous_coin_id || coin.next_coin_id)" class="mb-6 flex justify-between">
+            <div v-if="coin && (coin.previous_coin_slug || coin.next_coin_slug)" class="mb-6 flex justify-between">
                 <button
-                    v-if="coin.previous_coin_id"
-                    @click="navigateToCoin(coin.previous_coin_id)"
+                    v-if="coin.previous_coin_slug"
+                    @click="navigateToCoin(coin.previous_coin_slug)"
                     class="inline-flex cursor-pointer items-center rounded-lg bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
                 >
                     <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -160,10 +160,10 @@ const navigateToCoin = (coinId: number) => {
                     Previous Coin
                 </button>
                 <button
-                    v-if="coin.next_coin_id"
-                    @click="navigateToCoin(coin.next_coin_id)"
+                    v-if="coin.next_coin_slug"
+                    @click="navigateToCoin(coin.next_coin_slug)"
                     class="inline-flex cursor-pointer items-center rounded-lg bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
-                    :class="{ 'ml-auto': !coin.previous_coin_id }"
+                    :class="{ 'ml-auto': !coin.previous_coin_slug }"
                 >
                     Next Coin
                     <svg class="ml-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
