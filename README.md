@@ -1,5 +1,14 @@
 # Cryptocurrency Price Tracker
 
+[![PHP Version](https://img.shields.io/badge/PHP-8.4-777BB4?logo=php&logoColor=white)](https://www.php.net/)
+[![Laravel Version](https://img.shields.io/badge/Laravel-12-FF2D20?logo=laravel&logoColor=white)](https://laravel.com)
+[![Vue.js Version](https://img.shields.io/badge/Vue.js-3-4FC08D?logo=vue.js&logoColor=white)](https://vuejs.org/)
+[![Inertia.js](https://img.shields.io/badge/Inertia.js-v2-9553E9?logo=inertia&logoColor=white)](https://inertiajs.com)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
+[![Pest](https://img.shields.io/badge/Pest-v4-6E5494?logo=php&logoColor=white)](https://pestphp.com)
+[![Tests](https://img.shields.io/badge/tests-59_passing-success)](https://pestphp.com)
+[![Code Coverage](https://img.shields.io/badge/coverage-100%25_critical-success)]()
+
 A modern web application that displays real-time cryptocurrency prices and detailed information using the CoinGecko API.
 Built with Laravel 12, Vue 3, Inertia.js, Redis, and Tailwind CSS.
 
