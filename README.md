@@ -1,13 +1,16 @@
 # Cryptocurrency Price Tracker
 
+[![Tests](https://github.com/martincarlin87/coin-app/actions/workflows/tests.yml/badge.svg)](https://github.com/martincarlin87/coin-app/actions/workflows/tests.yml)
+[![Linter](https://github.com/martincarlin87/coin-app/actions/workflows/lint.yml/badge.svg)](https://github.com/martincarlin87/coin-app/actions/workflows/lint.yml)
+[![Security](https://github.com/martincarlin87/coin-app/actions/workflows/security.yml/badge.svg)](https://github.com/martincarlin87/coin-app/actions/workflows/security.yml)
+[![codecov](https://codecov.io/gh/martincarlin87/coin-app/branch/main/graph/badge.svg)](https://codecov.io/gh/martincarlin87/coin-app)
+
 [![PHP Version](https://img.shields.io/badge/PHP-8.4-777BB4?logo=php&logoColor=white)](https://www.php.net/)
 [![Laravel Version](https://img.shields.io/badge/Laravel-12-FF2D20?logo=laravel&logoColor=white)](https://laravel.com)
 [![Vue.js Version](https://img.shields.io/badge/Vue.js-3-4FC08D?logo=vue.js&logoColor=white)](https://vuejs.org/)
 [![Inertia.js](https://img.shields.io/badge/Inertia.js-v2-9553E9?logo=inertia&logoColor=white)](https://inertiajs.com)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
 [![Pest](https://img.shields.io/badge/Pest-v4-6E5494?logo=php&logoColor=white)](https://pestphp.com)
-[![Tests](https://img.shields.io/badge/tests-59_passing-success)](https://pestphp.com)
-[![Code Coverage](https://img.shields.io/badge/coverage-100%25_critical-success)]()
 
 A modern web application that displays real-time cryptocurrency prices and detailed information using the CoinGecko API.
 Built with Laravel 12, Vue 3, Inertia.js, Redis, and Tailwind CSS.
@@ -189,6 +192,46 @@ Comprehensive test coverage across multiple layers:
 - 59 tests
 - 332 assertions
 - 100% critical path coverage
+
+## CI/CD Pipeline
+
+This project uses GitHub Actions for continuous integration and deployment:
+
+### Automated Workflows
+
+**Tests Workflow** (`tests.yml`)
+- Runs on every push and pull request to `main` and `develop`
+- Sets up MySQL and Redis services
+- Runs database migrations
+- Executes full test suite (59 tests)
+- Ensures all tests pass before merging
+
+**Linter Workflow** (`lint.yml`)
+- Runs Laravel Pint for PHP code formatting
+- Runs ESLint and Prettier for JavaScript/Vue formatting
+- Ensures consistent code style across the project
+
+**Security Workflow** (`security.yml`)
+- Runs weekly and on every push
+- Checks Composer dependencies for vulnerabilities (`composer audit`)
+- Checks NPM dependencies for vulnerabilities (`npm audit`)
+- Provides early warning of security issues
+
+**Dependabot**
+- Automatically checks for dependency updates weekly
+- Creates pull requests for:
+  - Composer dependencies (PHP packages)
+  - NPM dependencies (JavaScript packages)
+  - GitHub Actions updates
+- Keeps the project secure and up-to-date
+
+**Code Coverage** (Codecov)
+- Automatically tracks code coverage on every push
+- Generates detailed coverage reports
+- Comments on pull requests with coverage changes
+- Visualizes coverage with interactive graphs
+
+All workflows must pass before code can be merged to the main branch.
 
 ## Development
 
