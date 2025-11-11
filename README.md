@@ -431,7 +431,8 @@ sail artisan migrate:fresh
 - Add charts by using available sparkline data from CoinGecko responses.
 - Use web sockets instead of polling for real time updates.
 - Abstract front end to reusable components
-- Implement StoryBook to create a component libray.
+- Implement StoryBook to create a component library.
+- Store coin data in local storage so page loads even quicker before being update by fresh request data
 
 ## License
 
