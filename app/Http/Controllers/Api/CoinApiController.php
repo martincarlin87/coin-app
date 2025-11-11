@@ -8,6 +8,7 @@ use App\Actions\GetCoinWithNavigation;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CoinResource;
 use App\Models\Coin;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Collection;
@@ -42,9 +43,10 @@ class CoinApiController extends Controller
 
             $query = Coin::query()
                 // Limit to top coins by market cap rank (based on length parameter)
+                // otherwise when searching for 'bitcoin', results for 'Wrapped Bitcoin' and 'Bitcoin Cash' are returned
                 ->where('market_cap_rank', '<=', $length)
                 // Filter results that match the search term, if specified
-                ->when($request->filled('search'), function ($query) use ($request): void {
+                ->when($request->filled('search'), function (Builder $query) use ($request): void {
                     $search = $request->input('search');
                     $query->whereAny(['name', 'symbol'], 'like', "%{$search}%");
                 })
