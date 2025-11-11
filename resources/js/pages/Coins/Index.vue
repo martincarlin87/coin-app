@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Head, router } from '@inertiajs/vue3';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import axios from 'axios';
 
 interface Coin {
@@ -21,9 +21,11 @@ const error = ref<string | null>(null);
 const searchQuery = ref('');
 const hasReceivedResponse = ref(false);
 
-const fetchCoins = async () => {
+const fetchCoins = async (showLoading = true) => {
     try {
-        loading.value = true;
+        if (showLoading) {
+            loading.value = true;
+        }
         error.value = null;
         const params: Record<string, string> = {};
         if (searchQuery.value) {
@@ -37,12 +39,28 @@ const fetchCoins = async () => {
         console.error(err);
         hasReceivedResponse.value = true;
     } finally {
-        loading.value = false;
+        if (showLoading) {
+            loading.value = false;
+        }
     }
 };
 
+let refreshInterval: ReturnType<typeof setInterval> | null = null;
+
 onMounted(() => {
     fetchCoins();
+
+    // Auto-refresh data every 5 minutes (300000ms)
+    refreshInterval = setInterval(() => {
+        fetchCoins(false); // Don't show loading spinner during background refresh
+    }, 300000);
+});
+
+onUnmounted(() => {
+    // Clean up interval when component unmounts
+    if (refreshInterval) {
+        clearInterval(refreshInterval);
+    }
 });
 
 const formatPrice = (price: string) => {
