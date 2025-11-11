@@ -118,12 +118,7 @@ describe('Coin API Caching', function () {
 
             getJson("/api/coins/{$coin->slug}")->assertSuccessful();
 
-            $cacheKey = 'coins:show:'.$coin->id.':'.md5(json_encode([
-                'search' => '',
-                'length' => 10,
-            ]));
-
-            expect(Cache::has($cacheKey))->toBeTrue();
+            expect(Cache::has($coin->slug))->toBeTrue();
         });
 
         it('serves subsequent requests from cache', function () {
@@ -151,38 +146,8 @@ describe('Coin API Caching', function () {
             getJson("/api/coins/{$coin1->slug}")->assertSuccessful();
             getJson("/api/coins/{$coin2->slug}")->assertSuccessful();
 
-            $key1 = 'coins:show:'.$coin1->id.':'.md5(json_encode([
-                'search' => '',
-                'length' => 10,
-            ]));
-
-            $key2 = 'coins:show:'.$coin2->id.':'.md5(json_encode([
-                'search' => '',
-                'length' => 10,
-            ]));
-
-            expect(Cache::has($key1))->toBeTrue()
-                ->and(Cache::has($key2))->toBeTrue();
-        });
-
-        it('creates different cache keys for different query parameters', function () {
-            $coin = Coin::factory()->create();
-
-            getJson("/api/coins/{$coin->slug}")->assertSuccessful();
-            getJson("/api/coins/{$coin->slug}?search=Bitcoin")->assertSuccessful();
-
-            $defaultKey = 'coins:show:'.$coin->id.':'.md5(json_encode([
-                'search' => '',
-                'length' => 10,
-            ]));
-
-            $searchKey = 'coins:show:'.$coin->id.':'.md5(json_encode([
-                'search' => 'Bitcoin',
-                'length' => 10,
-            ]));
-
-            expect(Cache::has($defaultKey))->toBeTrue()
-                ->and(Cache::has($searchKey))->toBeTrue();
+            expect(Cache::has($coin1->slug))->toBeTrue()
+                ->and(Cache::has($coin2->slug))->toBeTrue();
         });
 
         it('caches metadata when loaded', function () {
