@@ -3,7 +3,6 @@
 [![Tests](https://github.com/martincarlin87/coin-app/actions/workflows/tests.yml/badge.svg)](https://github.com/martincarlin87/coin-app/actions/workflows/tests.yml)
 [![Linter](https://github.com/martincarlin87/coin-app/actions/workflows/lint.yml/badge.svg)](https://github.com/martincarlin87/coin-app/actions/workflows/lint.yml)
 [![Security](https://github.com/martincarlin87/coin-app/actions/workflows/security.yml/badge.svg)](https://github.com/martincarlin87/coin-app/actions/workflows/security.yml)
-[![codecov](https://codecov.io/gh/martincarlin87/coin-app/branch/main/graph/badge.svg)](https://codecov.io/gh/martincarlin87/coin-app)
 
 [![PHP Version](https://img.shields.io/badge/PHP-8.4-777BB4?logo=php&logoColor=white)](https://www.php.net/)
 [![Laravel Version](https://img.shields.io/badge/Laravel-12-FF2D20?logo=laravel&logoColor=white)](https://laravel.com)
@@ -225,11 +224,11 @@ This project uses GitHub Actions for continuous integration and deployment:
   - GitHub Actions updates
 - Keeps the project secure and up-to-date
 
-**Code Coverage** (Codecov)
-- Automatically tracks code coverage on every push
-- Generates detailed coverage reports
-- Comments on pull requests with coverage changes
-- Visualizes coverage with interactive graphs
+**Code Coverage**
+- All tests run with coverage tracking via Pest
+- Minimum 80% coverage enforced on CI/CD
+- Tests fail if coverage drops below threshold
+- Run locally with: `./vendor/bin/pest --coverage --min=80`
 
 All workflows must pass before code can be merged to the main branch.
 

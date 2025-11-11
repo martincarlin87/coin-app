@@ -96,9 +96,4 @@ jobs:
           REDIS_PORT: 6379
           CACHE_STORE: redis
           SESSION_DRIVER: redis
-        run: ./vendor/bin/pest --coverage --coverage-clover coverage.xml
-
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v5
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+        run: ./vendor/bin/pest --coverage --min=80
