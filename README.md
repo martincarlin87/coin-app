@@ -427,6 +427,7 @@ sail artisan migrate:fresh
 
 ## Improvements
 
+- Add favicon
 - Add charts by using available sparkline data from CoinGecko responses.
 - Use web sockets instead of polling for real time updates.
 - Abstract front end to reusable components
