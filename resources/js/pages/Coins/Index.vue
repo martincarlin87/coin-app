@@ -2,18 +2,7 @@
 import { Head, router } from '@inertiajs/vue3';
 import { ref, onMounted, onUnmounted } from 'vue';
 import axios from 'axios';
-
-interface Coin {
-    id: number;
-    slug: string;
-    symbol: string;
-    name: string;
-    image: string;
-    current_price: string;
-    market_cap: number;
-    market_cap_rank: number;
-    price_change_percentage_24h: string;
-}
+import type { Coin } from '@/types/coin';
 
 const coins = ref<Coin[]>([]);
 const loading = ref(true);
@@ -26,11 +15,15 @@ const fetchCoins = async (showLoading = true) => {
         if (showLoading) {
             loading.value = true;
         }
+
         error.value = null;
+
         const params: Record<string, string> = {};
+
         if (searchQuery.value) {
             params.search = searchQuery.value;
         }
+
         const response = await axios.get('/api/coins', { params });
         coins.value = response.data.data;
         hasReceivedResponse.value = true;

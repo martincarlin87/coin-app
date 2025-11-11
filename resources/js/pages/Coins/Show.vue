@@ -2,76 +2,17 @@
 import { Head, Link, router } from '@inertiajs/vue3';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import type { Coin } from '@/types/coin';
 
-interface Props {
+type Props = {
     coinSlug: string;
-}
-
-interface CoinMetadata {
-    id: number;
-    coin_id: number;
-    web_slug: string | null;
-    asset_platform_id: string | null;
-    block_time_in_minutes: number | null;
-    hashing_algorithm: string | null;
-    categories: string[] | null;
-    preview_listing: boolean;
-    public_notice: string | null;
-    additional_notices: any[] | null;
-    genesis_date: string | null;
-    sentiment_votes_up_percentage: string | null;
-    sentiment_votes_down_percentage: string | null;
-    watchlist_portfolio_users: number | null;
-    platforms: any | null;
-    detail_platforms: any | null;
-    localization: any | null;
-    description: Record<string, string> | null;
-    links: any | null;
-    community_data: any | null;
-    developer_data: any | null;
-    status_updates: any[] | null;
-}
-
-interface Coin {
-    id: number;
-    slug: string;
-    symbol: string;
-    name: string;
-    image: string;
-    current_price: string;
-    market_cap: number;
-    market_cap_rank: number;
-    fully_diluted_valuation: number | null;
-    total_volume: string;
-    high_24h: string;
-    low_24h: string;
-    price_change_24h: string;
-    price_change_percentage_24h: string;
-    market_cap_change_24h: number;
-    market_cap_change_percentage_24h: string;
-    circulating_supply: string;
-    total_supply: string;
-    max_supply: string | null;
-    ath: string;
-    ath_change_percentage: string;
-    ath_date: string;
-    atl: string;
-    atl_change_percentage: string;
-    atl_date: string;
-    last_updated: string;
-    next_coin_slug?: string;
-    previous_coin_slug?: string;
-    metadata?: CoinMetadata;
-}
+};
 
 const props = defineProps<Props>();
 
 const coin = ref<Coin | null>(null);
 const loading = ref(true);
 const error = ref<string | null>(null);
-
-// Extract query parameters from URL
-const urlParams = new URLSearchParams(window.location.search);
 
 const fetchCoin = async () => {
     try {
