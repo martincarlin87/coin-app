@@ -13,7 +13,7 @@ final class CoinMetadataResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            ...$this->resource->only((new CoinMetadata())->getFillable()),
+            ...$this->resource->only((new CoinMetadata)->getFillable()),
         ];
     }
 }

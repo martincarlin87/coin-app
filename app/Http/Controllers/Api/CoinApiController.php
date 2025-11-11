@@ -34,13 +34,13 @@ final class CoinApiController extends Controller
         // Create a unique cache key based on query parameters
         $cacheKey = 'coins:index:'.md5(json_encode([
             'sort' => $request->input('sort', 'asc'),
-            'start' => $request->input('start', 0),
+            'start' => $request->integer('start'),
             'length' => $length,
-            'search' => $request->input('search', ''),
+            'search' => $request->string('search'),
         ]));
 
         // Cache for 5 minutes (300 seconds)
-        $coins = Cache::remember($cacheKey, 300, function () use ($request,  $length): Collection {
+        $coins = Cache::remember($cacheKey, 300, function () use ($request, $length): Collection {
             $query = Coin::query()
                 // Limit to top coins by market cap rank (based on length parameter)
                 // otherwise when searching for 'bitcoin', results for 'Wrapped Bitcoin' and 'Bitcoin Cash' are returned

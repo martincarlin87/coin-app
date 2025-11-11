@@ -59,7 +59,7 @@ final readonly class CoinImportService
 
             // Convert ISO 8601 datetime strings to MySQL format since upsert() doesn't apply model casts
             foreach (['ath_date', 'atl_date', 'last_updated'] as $dateField) {
-                if (!empty($coinData[$dateField])) {
+                if (! empty($coinData[$dateField])) {
                     $coinData[$dateField] = Carbon::parse($coinData[$dateField])->format('Y-m-d H:i:s');
                 }
             }
@@ -143,7 +143,7 @@ final readonly class CoinImportService
 
             // Get retry-after header (in seconds) or default to exponential backoff
             $retryAfter = $response->header('Retry-After');
-            $waitSeconds = $retryAfter ? (int)$retryAfter : (2 ** $attempt);
+            $waitSeconds = $retryAfter ? (int) $retryAfter : (2 ** $attempt);
 
             Log::warning("CoinGecko API rate limit hit for {$endpoint}. Retrying after {$waitSeconds} seconds. Attempt {$attempt}/{$maxAttempts}");
 

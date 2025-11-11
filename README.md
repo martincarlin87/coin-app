@@ -27,7 +27,7 @@ Built with Laravel 12, Vue 3, Inertia.js, Redis, and Tailwind CSS.
 - **Auto-Refresh**: Data automatically updates every 5 minutes
 - **Performance Optimized**: 5-minute caching to reduce database load
 - **Secure API**: CORS protection and rate limiting (60 req/min)
-- **Comprehensive Testing**: 59 tests covering all critical functionality
+- **Comprehensive Testing**: 58 tests covering all critical functionality
 
 ## Quick Start
 
@@ -188,8 +188,8 @@ Comprehensive test coverage across multiple layers:
 - **Security Tests**: Rate limiting and API protection
 
 **Test Statistics:**
-- 59 tests
-- 332 assertions
+- 58 tests
+- 328 assertions
 - 100% critical path coverage
 
 ## CI/CD Pipeline
@@ -202,7 +202,7 @@ This project uses GitHub Actions for continuous integration and deployment:
 - Runs on every push and pull request to `main` and `develop`
 - Sets up MySQL and Redis services
 - Runs database migrations
-- Executes full test suite (59 tests)
+- Executes full test suite (58 tests)
 - Ensures all tests pass before merging
 
 **Linter Workflow** (`lint.yml`)
