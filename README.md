@@ -425,6 +425,13 @@ sail up
 sail artisan migrate:fresh
 ```
 
+## Improvements
+
+- Add charts by using available sparkline data from CoinGecko responses.
+- Use web sockets instead of polling for real time updates.
+- Abstract front end to reusable components
+- Implement StoryBook to create a component libray.
+
 ## License
 
 This project was created as a technical assessment.

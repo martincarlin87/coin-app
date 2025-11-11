@@ -72,20 +72,12 @@ const error = ref<string | null>(null);
 
 // Extract query parameters from URL
 const urlParams = new URLSearchParams(window.location.search);
-const searchQuery = urlParams.get('search') || '';
-const length = urlParams.get('length') || '10';
 
 const fetchCoin = async () => {
     try {
         loading.value = true;
         error.value = null;
-        const params: Record<string, string> = {
-            length,
-        };
-        if (searchQuery) {
-            params.search = searchQuery;
-        }
-        const response = await axios.get(`/api/coins/${props.coinSlug}`, { params });
+        const response = await axios.get(`/api/coins/${props.coinSlug}`);
         coin.value = response.data.data;
     } catch (err) {
         error.value = 'Failed to load coin details';
@@ -121,13 +113,7 @@ const formatDate = (dateString: string) => {
 };
 
 const navigateToCoin = (coinSlug: string) => {
-    const params = new URLSearchParams();
-    if (searchQuery) {
-        params.set('search', searchQuery);
-    }
-
-    const queryString = params.toString();
-    router.visit(`/coins/${coinSlug}${queryString ? '?' + queryString : ''}`);
+    router.visit(`/coins/${coinSlug}`);
 };
 </script>
 

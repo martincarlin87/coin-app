@@ -3,7 +3,7 @@
 use App\Jobs\ImportCoinMetadataJob;
 use App\Models\Coin;
 use App\Models\CoinMetadata;
-use App\Service\CoinImportService;
+use App\Services\CoinImportService;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;
 

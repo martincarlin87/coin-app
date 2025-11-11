@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Service\CoinImportService;
+use App\Services\CoinImportService;
 use Illuminate\Console\Command;
 use JetBrains\PhpStorm\NoReturn;
 
