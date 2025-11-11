@@ -67,6 +67,11 @@ jobs:
           sed -i 's/DB_USERNAME=.*/DB_USERNAME=sail/' .env
           sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=password/' .env
 
+      - name: Create Testing Database
+        run: |
+          mysql -h 127.0.0.1 -u root -ppassword -e "CREATE DATABASE IF NOT EXISTS testing;"
+          mysql -h 127.0.0.1 -u root -ppassword -e "GRANT ALL PRIVILEGES ON testing.* TO 'sail'@'%';"
+
       - name: Generate Application Key
         run: php artisan key:generate
 
